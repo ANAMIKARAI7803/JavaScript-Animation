@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>newone</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/gsap.min.js"></script>
+    <style>
+        * 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Gilroy';
+
+}
+
+html, body{
+    height : 100%;
+    width : 100%
+}
+
+#center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    width: 400px;
+    height: 200px;
+    border: 1px solid black;
+}
+
+    </style>
+</head>
+<body>
+    <div id="center"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" 
+    integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEG
+    kTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var rect = document.querySelector("#center");
+
+rect.addEventListener("mousemove", function (details) {
+    var rectanglelocation = rect.getBoundingClientRect();
+    var insiderectval = details.clientX - rectanglelocation.left;
+
+    if (insiderectval < rectanglelocation.width / 2) {
+        var anamika= gsap.utils.mapRange(
+            0, rectanglelocation.width / 2, 255, 0, insiderectval
+        );
+        gsap.to(rect, {
+            backgroundColor: `rgb(0, ${anamika}, 0)`,
+            ease: Power4.easeOut, // corrected ease function
+        });
+    } else {
+        var bluecolor = gsap.utils.mapRange(
+            rectanglelocation.width / 2,
+            rectanglelocation.width,
+            0,
+            255,
+            insiderectval
+        );
+        gsap.to(rect, {
+            backgroundColor: `rgb(0, 0, ${bluecolor})`,
+            ease: Power4.easeOut, // corrected ease function
+        });
+    }
+});
+
+rect.addEventListener("mouseleave", function () {
+    gsap.to(rect, {
+        backgroundColor: "orange",
+    });
+});
+
+    </script>
+</body>
+</html>
